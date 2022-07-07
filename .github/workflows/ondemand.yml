@@ -2,7 +2,11 @@ name: Deploy Quickstart Containers
 
 on:
   workflow_dispatch:
-		branches: [ main ]
+    inputs:
+      environment:
+        type: string
+        default: DEV
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
