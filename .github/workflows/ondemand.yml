@@ -1,0 +1,12 @@
+name: Deploy Quickstart Containers
+
+on:
+  workflow_dispatch:
+		branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Print value
+        run: echo ${{ env.environment }}
