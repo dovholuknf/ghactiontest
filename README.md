@@ -7,7 +7,7 @@ Various materials related to or pertaining to the branding of OpenZiti
     <img src="https://img.shields.io/discourse/users?server=https%3A%2F%2Fopenziti.discourse.group" alt="Discourse">
   </a>
   
-  ![Drag Racing][(Dragster.jpg](https://img.shields.io/discourse/users?server=https%3A%2F%2Fopenziti.discourse.group))
+![Drag Racing][(Dragster.jpg](https://img.shields.io/discourse/users?server=https%3A%2F%2Fopenziti.discourse.group))
   
 </p>
 
