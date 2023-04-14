@@ -6,10 +6,11 @@ Various materials related to or pertaining to the branding of OpenZiti
   
 </div>
 
-
+<head>
 <style type="text/css" rel="stylesheet">
 #bob {
   display:flex;
   justify-content: center;
 }
 </style>
+</head>
