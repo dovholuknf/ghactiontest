@@ -45,6 +45,6 @@ jobs:
       - env:
           OUTPUT1: ${{needs.setbuildinfo.outputs.now}}
           OUTPUT2: ${{needs.setbuildinfo.outputs.repo}}
-      - name: Echo outputs
+        name: Echo outputs
         run: |
           echo "$OUTPUT1 $OUTPUT2"
