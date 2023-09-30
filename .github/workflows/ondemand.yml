@@ -14,37 +14,42 @@ jobs:
     outputs:
       now: ${{ steps.buildinfo.outputs.now }}
       repo: ${{ steps.buildinfo.outputs.repo }}
+      qualifier: ${{ steps.buildinfo.outputs.qualifier }}
+      branch: ${{ steps.buildinfo.outputs.qualifier }}
+      buildnum: ${{ steps.buildinfo.outputs.buildnum }}
     steps:
-      - name: Set now, repo, qualifier, build num
+      - name: Set now, repo, qualifier, branch, build num
         id: buildinfo
         run: |
           echo "now=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
-          echo "repo=${{github.repository_owner}}" >> $GITHUB_OUTPUT
+          if [ "${{ github.repository }}" == 'openziti/ziti-sdk-csharp' ]; then
+            echo "repo=" >> $GITHUB_OUTPUT
+          else
+            echo "repo=-${{github.repository_owner}}" >> $GITHUB_OUTPUT
+          fi
+          echo "branch=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_OUTPUT
+          echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_ENV
+          if [ "${BRANCH_NAME}" = "main" ]; then
+            echo "qualifier=" >> $GITHUB_OUTPUT
+          else
+            echo "qualifier=-rc" >> $GITHUB_OUTPUT
+          fi
+          echo "buildnum=.${{env.BUILD_NUMBER}}" >> $GITHUB_OUTPUT
         
       - name: Set Branch Name
         id: set_branch
         run: |
-          echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_ENV
-
-      - name: Set Qualifier
-        run: |
-          if [ "$BRANCH_NAME" = "main" ]; then
-            echo "QUALIFIER=${BRANCH_NAME}-main" >> $GITHUB_ENV
-          else
-            echo "QUALIFIER=${BRANCH_NAME}-not-main" >> $GITHUB_ENV
-          fi
-          
-      - name: Output Qualifier
-        run: |
-          echo "QUALIFIER is ${QUALIFIER}"
 
   downstream:
     runs-on: ubuntu-latest
     needs: setbuildinfo
     steps:
       - env:
-          OUTPUT1: ${{needs.setbuildinfo.outputs.now}}
-          OUTPUT2: ${{needs.setbuildinfo.outputs.repo}}
+          now: ${{needs.setbuildinfo.outputs.now}}
+          repo: ${{needs.setbuildinfo.outputs.repo}}
+          qualifier: ${{needs.setbuildinfo.outputs.qualifier}}
+          branch: ${{needs.setbuildinfo.outputs.branch}}
+          buildnum: ${{needs.setbuildinfo.outputs.buildnum}}
         name: Echo outputs
         run: |
-          echo "$OUTPUT1 $OUTPUT2"
+          echo "MyPackage${repo}${qualifier}${buildnum}"
