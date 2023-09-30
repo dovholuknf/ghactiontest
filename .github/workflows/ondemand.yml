@@ -13,8 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: IfMain
-        if: "$(echo $GITHUB_REF | grep -o 'refs/heads/main') == 'refs/heads/main'"
+      - name: Check if branch is 'main'
+        id: check_branch
+        run: echo "::set-output name=is_main::$(echo $GITHUB_REF | grep -o 'refs/heads/main')"
+
+      - name: Your Conditional Step
+        if: steps.check_branch.outputs.is_main == 'refs/heads/main'
         run: |
           # This step will only run if the branch is 'main'
           echo "This step runs only on the 'main' branch"
