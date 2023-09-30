@@ -25,3 +25,7 @@ jobs:
           else
             echo "QUALIFIER=${GIT_BRANCH}" >> $GITHUB_ENV
           fi
+          
+      - name: Output Qualifier
+        run: |
+          echo "QUALIFIER is ${QUALIFIER}"
