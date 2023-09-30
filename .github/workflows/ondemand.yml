@@ -19,7 +19,7 @@ jobs:
         id: buildinfo
         run: |
           echo "now=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
-          echo "repo=${github.repository_owner}" >> $GITHUB_OUTPUT
+          echo "repo=${{github.repository_owner}}" >> $GITHUB_OUTPUT
         
       - name: Set Branch Name
         id: set_branch
