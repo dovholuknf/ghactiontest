@@ -36,4 +36,4 @@ jobs:
     steps:
       - name: Echo outputs
         run: |
-          echo "${steps.set_branch.now} is now"
+          echo "${needs.set-build-info.outputs.now} is now"
