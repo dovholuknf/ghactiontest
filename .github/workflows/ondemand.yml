@@ -10,13 +10,17 @@ on:
         
 jobs:
   set-build-info:
+    id: buildinfo
     runs-on: ubuntu-latest
     outputs:
-      now: ${{ steps.isotime.outputs.val }}
+      now: ${{ steps.buildinfo.outputs.now }}
+      repo: ${{ steps.buildinfo.outputs.repo }}
     steps:
-      - name: Set date, repo, qualifier, build-n
-        id: isotime
-        run: echo "val=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+      - name: Set now, repo, qualifier, build-n
+        id: buildinfo
+        run: |
+          echo "now=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+          echo "repo=${github.repository_owner}" >> $GITHUB_OUTPUT
         
       - name: Set Branch Name
         id: set_branch
@@ -38,6 +42,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: set-build-info
     steps:
+      - env:
+          OUTPUT1: ${{needs.buildinfo.outputs.now}}
+          OUTPUT2: ${{needs.buildinfo.outputs.repo}}
       - name: Echo outputs
         run: |
-          echo "${needs.set-build-info.outputs.now} is now"
+          echo "$OUTPUT1 $OUTPUT2"
