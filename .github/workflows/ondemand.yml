@@ -15,7 +15,7 @@ jobs:
       now: ${{ steps.buildinfo.outputs.now }}
       repo: ${{ steps.buildinfo.outputs.repo }}
       qualifier: ${{ steps.buildinfo.outputs.qualifier }}
-      branch: ${{ steps.buildinfo.outputs.branch }}
+      branch: ${{ steps.branchinfo.outputs.branch }}
     steps:
       - name: Set now, repo, qualifier, build num
         id: buildinfo
@@ -30,7 +30,7 @@ jobs:
           echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_ENV
 
       - name: Set branch
-        id: buildinfo
+        id: branchinfo
         run: |
           if [ "${BRANCH_NAME}" = "main" ]; then
             echo "qualifier=.${{github.run_number}}" >> $GITHUB_OUTPUT
