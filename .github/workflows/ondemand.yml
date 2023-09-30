@@ -14,10 +14,10 @@ jobs:
     outputs:
       now: ${{ steps.buildinfo.outputs.now }}
       repo: ${{ steps.buildinfo.outputs.repo }}
-      qualifier: ${{ steps.buildinfo.outputs.qualifier }}
       branch: ${{ steps.branchinfo.outputs.branch }}
+      qualifier: ${{ steps.branchinfo.outputs.qualifier }}
     steps:
-      - name: Set now, repo, qualifier, build num
+      - name: Set now, repo, branch, build num
         id: buildinfo
         run: |
           echo "now=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
@@ -26,10 +26,10 @@ jobs:
           else
             echo "repo=-${{github.repository_owner}}" >> $GITHUB_OUTPUT
           fi
-          echo "branch=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_OUTPUT
           echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_ENV
+          echo "branch=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_OUTPUT
 
-      - name: Set branch
+      - name: Set qualifier
         id: branchinfo
         run: |
           if [ "${BRANCH_NAME}" = "main" ]; then
