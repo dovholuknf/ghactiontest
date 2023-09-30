@@ -9,7 +9,7 @@ on:
         required: true
         
 jobs:
-  setbuildinfo:
+  set-build-info:
     runs-on: ubuntu-latest
     outputs:
       now: ${{ steps.buildinfo.outputs.now }}
@@ -35,21 +35,17 @@ jobs:
             echo "qualifier=-rc" >> $GITHUB_OUTPUT
           fi
           echo "buildnum=.${{github.run_number}}" >> $GITHUB_OUTPUT
-        
-      - name: Set Branch Name
-        id: set_branch
-        run: |
 
   downstream:
     runs-on: ubuntu-latest
-    needs: setbuildinfo
+    needs: set-build-info
     steps:
       - env:
-          now: ${{needs.setbuildinfo.outputs.now}}
-          repo: ${{needs.setbuildinfo.outputs.repo}}
-          qualifier: ${{needs.setbuildinfo.outputs.qualifier}}
-          branch: ${{needs.setbuildinfo.outputs.branch}}
-          buildnum: ${{needs.setbuildinfo.outputs.buildnum}}
+          now: ${{needs.set-build-info.outputs.now}}
+          repo: ${{needs.set-build-info.outputs.repo}}
+          qualifier: ${{needs.set-build-info.outputs.qualifier}}
+          branch: ${{needs.set-build-info.outputs.branch}}
+          buildnum: ${{needs.set-build-info.outputs.buildnum}}
         name: Echo outputs
         run: |
           echo "MyPackage${repo}${qualifier}${buildnum}"
