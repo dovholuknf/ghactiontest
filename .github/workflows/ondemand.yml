@@ -14,6 +14,10 @@ jobs:
     outputs:
       now: ${{ steps.isotime.outputs.val }}
     steps:
+      - name: Set date, repo, qualifier, build-n
+        id: isotime
+        run: echo "val=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+        
       - name: Set Branch Name
         id: set_branch
         run: echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_ENV
