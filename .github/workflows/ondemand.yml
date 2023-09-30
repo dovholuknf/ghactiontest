@@ -20,7 +20,7 @@ jobs:
 
       - name: Set Qualifier
         run: |
-          if [ "$is_main" = "refs/heads/main" ]; then
+          if [ "$GIT_BRANCH" = "refs/heads/main" ]; then
             echo "QUALIFIER=${GIT_BRANCH}" >> $GITHUB_ENV
           else
             echo "QUALIFIER=${GIT_BRANCH}" >> $GITHUB_ENV
