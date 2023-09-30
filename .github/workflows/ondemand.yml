@@ -35,4 +35,5 @@ jobs:
     needs: set-build-info
     steps:
       - name: Echo outputs
-        echo "${steps.set_branch.now} is now"
+        run: |
+          echo "${steps.set_branch.now} is now"
