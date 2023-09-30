@@ -34,7 +34,7 @@ jobs:
           else
             echo "qualifier=-rc" >> $GITHUB_OUTPUT
           fi
-          echo "buildnum=.${{env.BUILD_NUMBER}}" >> $GITHUB_OUTPUT
+          echo "buildnum=.${{github.run_number}}" >> $GITHUB_OUTPUT
         
       - name: Set Branch Name
         id: set_branch
