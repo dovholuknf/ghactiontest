@@ -24,7 +24,7 @@ jobs:
           echo "This step runs only on the 'main' branch"
           
       - name: If NOT main
-        if: steps.check_branch.outputs.branch == 'refs/heads/main'
+        if: steps.check_branch.outputs.branch != 'refs/heads/main'
         run: |
           # This step will only run if the branch is 'main'
           echo "This is not the main branch: ${{ steps.check_branch.outputs.is_main }}"
