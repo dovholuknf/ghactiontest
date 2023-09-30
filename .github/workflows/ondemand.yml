@@ -33,7 +33,7 @@ jobs:
         id: branchinfo
         run: |
           if [ "${BRANCH_NAME}" = "main" ]; then
-            echo "qualifier=.${{github.run_number}}" >> $GITHUB_OUTPUT
+            echo "qualifier=.${BRANCH_NAME}${{github.run_number}}" >> $GITHUB_OUTPUT
           else
             echo "qualifier=-${BRANCH_NAME}rc${{github.run_number}}" >> $GITHUB_OUTPUT
           fi
