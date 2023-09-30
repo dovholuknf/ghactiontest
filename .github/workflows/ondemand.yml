@@ -9,23 +9,30 @@ on:
         required: true
         
 jobs:
-  your_job_name:
+  set-build-info:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if branch is 'main'
-        id: check_branch
-        run: |
-          echo "GIT_BRANCH=$(echo $GITHUB_REF | grep -o 'refs/heads/main')" >> $GITHUB_ENV
+      - name: Set Branch Name
+        id: set_branch
+        run: echo "BRANCH_NAME=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_ENV
+        outputs:
+          now: ${{ steps.isotime.outputs.val }}
 
       - name: Set Qualifier
         run: |
-          if [ "$GIT_BRANCH" = "refs/heads/main" ]; then
-            echo "QUALIFIER=${GIT_BRANCH}" >> $GITHUB_ENV
+          if [ "$BRANCH_NAME" = "main" ]; then
+            echo "QUALIFIER=${BRANCH_NAME}-main" >> $GITHUB_ENV
           else
-            echo "QUALIFIER=${GIT_BRANCH}" >> $GITHUB_ENV
+            echo "QUALIFIER=${BRANCH_NAME}-not-main" >> $GITHUB_ENV
           fi
           
       - name: Output Qualifier
         run: |
           echo "QUALIFIER is ${QUALIFIER}"
+
+  downstream:
+    needs: set-build-info
+    steps:
+      - name: Echo outputs
+        echo "${steps.set_branch.now} is now"
