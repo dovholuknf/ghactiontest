@@ -15,7 +15,7 @@ jobs:
       now: ${{ steps.buildinfo.outputs.now }}
       repo: ${{ steps.buildinfo.outputs.repo }}
     steps:
-      - name: Set now, repo, qualifier, build-n
+      - name: Set now, repo, qualifier, build num
         id: buildinfo
         run: |
           echo "now=$(date '+%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
