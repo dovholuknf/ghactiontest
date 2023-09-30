@@ -1,4 +1,4 @@
-name: Deploy Quickstart Containers
+name: OnDemand Action Test Because I Can't Run This Locally
 
 on:
   workflow_dispatch:
@@ -7,10 +7,14 @@ on:
         type: string
         default: DEV
         required: true
+        
 jobs:
-  build:
+  your_job_name:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Print value
-        run: echo ${{ inputs.environment }}
+      - name: IfMain
+        if: "$(echo $GITHUB_REF | grep -o 'refs/heads/main') == 'refs/heads/main'"
+        run: |
+          # This step will only run if the branch is 'main'
+          echo "This step runs only on the 'main' branch"
