@@ -43,8 +43,8 @@ jobs:
     env:
       now: ${{needs.set-build-info.outputs.now}}
       repo: ${{needs.set-build-info.outputs.repo}}
-      qualifier: ${{needs.set-build-info.outputs.qualifier}}
       branch: ${{needs.set-build-info.outputs.branch}}
+      qualifier: ${{needs.set-build-info.outputs.qualifier}}
     runs-on: ubuntu-latest
     steps:
       - name: Set resolves version to env
