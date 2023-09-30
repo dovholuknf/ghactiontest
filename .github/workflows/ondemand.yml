@@ -10,7 +10,6 @@ on:
         
 jobs:
   set-build-info:
-    id: buildinfo
     runs-on: ubuntu-latest
     outputs:
       now: ${{ steps.buildinfo.outputs.now }}
@@ -43,8 +42,8 @@ jobs:
     needs: set-build-info
     steps:
       - env:
-          OUTPUT1: ${{needs.buildinfo.outputs.now}}
-          OUTPUT2: ${{needs.buildinfo.outputs.repo}}
+          OUTPUT1: ${{needs.set-build-info.outputs.now}}
+          OUTPUT2: ${{needs.set-build-info.outputs.repo}}
       - name: Echo outputs
         run: |
           echo "$OUTPUT1 $OUTPUT2"
